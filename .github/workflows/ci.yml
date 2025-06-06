@@ -25,6 +25,8 @@ jobs:
           python-version: "3.11"
 
       - name: Verify environment
+        shell: bash -l {0}
         run: |
           conda activate myenv
           conda list
+          echo "Conda environment verification successful!"
