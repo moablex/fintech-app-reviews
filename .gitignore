@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+ENV/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode or other editor settings
+.vscode/
+.idea/
+
+# macOS and Linux system files
+.DS_Store
+Thumbs.db
+
+# Python egg metadata
+*.egg-info/
+*.egg
+
+# Logs
+*.log
+logs/
+
+# Test coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Pytest cache
+.pytest_cache/
+
+# Oracle / SQL developer artifacts
+*.sql~
+*.db
+*.dmp
+*.log
+
+
+# Data files 
+data/raw/
+data/cleaned/
+data/processed/
+
+# Secrets 
+secrets.json
+*.env
+
+# Reports 
+reports/*.docx
+reports/*.pptx
+reports/*.tmp.*
+
+# Build artifacts
+build/
+dist/
+*.bak

@@ -1,0 +1,32 @@
+name: Setup Conda Environment
+
+on:
+  push:
+    branches: [main, setup-task]
+  pull_request:
+    branches: [main, setup-task]
+
+jobs:
+  setup-conda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          auto-update-conda: true
+          activate-environment: "myenv"
+          environment-file: "environment.yml"
+          python-version: "3.11"
+
+      - name: Verify environment
+        shell: bash -l {0}
+        run: |
+          conda activate myenv
+          conda list
+          echo "Conda environment verification successful!"
