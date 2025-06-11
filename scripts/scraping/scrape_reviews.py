@@ -1,6 +1,8 @@
 import csv
 import logging
 import time
+import os
+from pathlib import Path
 from google_play_scraper import Sort, reviews
 from datetime import datetime
 
@@ -15,9 +17,7 @@ logging.basicConfig(
 BANK_APPS = {
     'Commercial Bank of Ethiopia': 'com.combanketh.mobilebanking',
     'Dashen Bank': 'com.dashen.dashensuperapp',
-    'Bank of Abyssinia': 'com.dashen.dashensuperapp',
-
-     
+    'Bank of Abyssinia': 'com.boa.boaMobileBanking',
 }
 
 # Constants
@@ -76,18 +76,25 @@ def scrape_bank_reviews(bank_name, app_id):
 
 def save_to_csv(reviews, bank_name):
     """Save reviews to CSV with timestamp"""
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = f'data/raw/{bank_name.replace(" ", "_")}_reviews_{timestamp}.csv'
+    # Define the output directory
+    output_dir = Path('data/raw')
     
-    with open(filename, 'w', newline='', encoding='utf-8') as f:
+    # Create directory if it doesn't exist
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    filename = f'{bank_name.replace(" ", "_")}_reviews_{timestamp}.csv'
+    file_path = output_dir / filename
+    
+    with open(file_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=[
             'review_text', 'rating', 'date', 'bank_name', 'source'
         ])
         writer.writeheader()
         writer.writerows(reviews)
     
-    logging.info(f"✅ Saved {len(reviews)} reviews to {filename}")
-    return filename
+    logging.info(f"✅ Saved {len(reviews)} reviews to {file_path}")
+    return str(file_path)
 
 def main():
     """Main scraping workflow"""
