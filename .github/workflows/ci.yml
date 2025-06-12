@@ -1,48 +1,32 @@
-name: Setup Conda Environment and Run Analysis
+name: Setup Conda Environment
 
 on:
   push:
-    branches: [main, setup-task, task-2]
+    branches: [main, setup-task]
   pull_request:
-    branches: [main, setup-task, task-2]
+    branches: [main, setup-task]
 
 jobs:
   setup-conda:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Set Up Miniconda
+      - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
           auto-update-conda: true
-          activate-environment: myenv
-          environment-file: environment.yml
-          python-version: 3.11
-          use-only-tar-bz2: true # Fix some caching issues
+          activate-environment: "myenv"
+          environment-file: "environment.yml"
+          python-version: "3.10.18"
 
-      - name: Verify Conda Environment
+      - name: Verify environment
         shell: bash -l {0}
         run: |
-          conda info
+          conda activate myenv
           conda list
-
-      - name: Download spaCy Model
-        shell: bash -l {0}
-        run: |
-          python -m spacy download en_core_web_sm
-
-      - name: Run Analysis Script (Task 2)
-        shell: bash -l {0}
-        run: |
-          python scripts/analysis/task2_analysis.py
-
-      - name: Show Output Files
-        shell: bash -l {0}
-        run: |
-          ls -lh data/analysis || echo "No output generated"
+          echo "Conda environment verification successful!"
