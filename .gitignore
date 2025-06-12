@@ -52,6 +52,7 @@ htmlcov/
 data/raw/
 data/cleaned/
 data/processed/
+data/analysis
 
 # Secrets 
 secrets.json

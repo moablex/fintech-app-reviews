@@ -22,7 +22,7 @@ jobs:
           auto-update-conda: true
           activate-environment: "myenv"
           environment-file: "environment.yml"
-          python-version: "3.11"
+          python-version: "3.10.18"
 
       - name: Verify environment
         shell: bash -l {0}
